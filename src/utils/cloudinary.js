@@ -21,5 +21,21 @@ const uploadOnCloudinary = async (localFilePath) => {
     return null;
   }
 };
-
-export { uploadOnCloudinary };
+const deleteOnCloudinary = async (fileUrl) => {
+  try {
+    fileUrl = fileUrl.split("/");
+    let imageName = fileUrl[fileUrl.length - 1].split(".");
+    const imageId = imageName[0];
+    console.log(imageId);
+    console.log(cloudinary.api);
+    cloudinary.api
+      .delete_resources(imageId, {
+        type: "upload",
+        resource_type: "image",
+      })
+      .then(console.log);
+  } catch (error) {
+    console.log("Error deleting old avatar from url");
+  }
+};
+export { uploadOnCloudinary, deleteOnCloudinary };
